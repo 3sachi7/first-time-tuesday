@@ -1,34 +1,42 @@
-from flask import Flask,request,render_template
+from flask import Flask,render_template,request
 import google.generativeai as palm
-
-palm.configure(api_key="AIzaSyCCT1K99BJ1JbLwhCE7qOcQ5KOZcPJ9ZZ4")
+palm.configure(api_key="AIzaSyBanf1tuv5CAcvzv02Il7ImDRGBSmEnOuk")
 model = {
-    "model": "models/chat-bison-001",
+    "model":"models/chat-bison-001",
 }
+
+name=""
+flag=1
 
 app = Flask(__name__)
 
-@app.route("/",methods=["GET","POST"])
+@app.route("/",methods=["GET", "POST"])
 def index():
+    global flag
+    flag=1
     return(render_template("index.html"))
-    
-@app.route("/main",methods=["GET","POST"])
-def main():
-    name = request.form.get("name")
-    return(render_template("main.html",r=name))
 
-@app.route("/palm_request",methods=["GET","POST"])
+@app.route("/main", methods=["GET", "POST"])
+def main():
+    global flag,name
+    if flag==1:
+        name = request.form.get("name")
+        flag=0
+    return(render_template("main.html", r=name))
+
+@app.route("/palm_request", methods=["GET", "POST"])
 def palm_request():
     return(render_template("palm.html"))
 
-@app.route("/palm_reply",methods=["GET","POST"])
+@app.route("/palm_reply", methods=["GET", "POST"])
 def palm_reply():
     q = request.form.get("q")
     r = palm.chat(
-        **model,
-        messages=q
+    **model,
+    messages=q
     )
-    return(render_template("palm_reply.html",r=r.last))
+    return(render_template("palm_reply.html", r=r.last))
 
-if __name__ == "__main__":
+
+if __name__=="__main__":
     app.run()
