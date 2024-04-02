@@ -2,7 +2,7 @@ from flask import Flask,render_template,request
 import google.generativeai as palm
 import replicate
 import os
-
+import time
 os.environ['REPLICATE_API_TOKEN'] = "787f515cb0624813736c11e7fefec66473394f02"
 palm.configure(api_key="AIzaSyBanf1tuv5CAcvzv02Il7ImDRGBSmEnOuk")
 model = {
@@ -88,6 +88,7 @@ def video_reply():
         "num_frames": 20
     },
 )
+    time.sleep(60)
     return(render_template("video_reply.html", r=r[0]))
 
 
