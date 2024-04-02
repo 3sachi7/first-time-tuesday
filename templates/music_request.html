@@ -6,12 +6,9 @@
 </style>
 
 <div class="container">
-<p><h2>Reply from paLM(google) </h2></p>
-<p><h4>{{r}} </h4></p>
-<form action="/main" method="post">
-    <p><input type="submit" value="Main"></p>
-</form>
-<form action="/" method="post">
-    <p><input type="submit" value="End"></p>
+<p><h2>Please enter your music title: </h2></p>
+<form action="/music_reply" method="post">
+    <p><input type="text" name="q"></p>
+    <p><input type="submit" value="Enter"></p>
 </form>
 </div>
